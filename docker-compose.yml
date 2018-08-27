@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  jupyterlab:
+    image: 127.0.0.1:5000/juypterlab_stack:${VER}
+    ports:
+      - "8888:8888"
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - USE_SSL=yes
+      - GEN_CERT=yes
+    volumes:
+     - "./juypter_work:/home/jovyan/work"
+     - "./juypter_local:/home/jovyan/.local"
