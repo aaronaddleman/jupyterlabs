@@ -1,5 +1,7 @@
 # JupyterLabs
 
+[![Build Status](https://travis-ci.org/aaronaddleman/jupyterlabs.svg?branch=master)](https://travis-ci.org/aaronaddleman/jupyterlabs)
+
 ## what
 
 Docker image running Jupyterlabs and many languages. I use this for creating diagrams, practicing with languages, and documenting things.
