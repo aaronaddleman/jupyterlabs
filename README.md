@@ -21,7 +21,7 @@ docker run aaronaddleman/jupyterlabs:latest -p 8888:8888 -e JUPYTER_ENABLE_LAB=y
 You should get an output similar to this with instructions on visiting a url:
 
 ```
-[I 05:45:02.890 LabApp] https://(99002e8144b3 or 127.0.0.1):8888/?token=609bab05d33c768c50e71d89e27dc007194aa243b349a4f1
+[I 05:45:02.890 LabApp] https://(99002e8144b3 or 127.0.0.1):8888/?token=SECRET_TOKEN_HERE
 [I 05:45:02.890 LabApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
 [C 05:45:02.891 LabApp]
 
