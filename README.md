@@ -12,10 +12,40 @@ JupyterLabs provides a wonderful web interface for running code and documents si
 
 ## how
 
-To consume these images, just run the following:
+To consume these images, just run one of the following:
 
 ```
-docker run aaronaddleman/jupyterlabs:latest -p 8888:8888 -e JUPYTER_ENABLE_LAB=yes -e USE_SSL=yes -e GEN_CERT=yes -v "your/src:/home/jovyan/src"
+#
+# plain ol' jupyterlabs
+#
+docker run \
+-p 8888:8888 \
+-e JUPYTER_ENABLE_LAB=yes \
+-e USE_SSL=yes \
+-e GEN_CERT=yes \
+aaronaddleman/jupyterlabs:latest
+#
+# or if you have $HOME/src (and you should...)
+#
+docker run \
+-p 8888:8888 \
+-e JUPYTER_ENABLE_LAB=yes \
+-e USE_SSL=yes \
+-e GEN_CERT=yes \
+-v "$HOME/src:/home/jovyan/src" \
+aaronaddleman/jupyterlabs:latest
+#
+# or if you want to mount everything (and you might...not want to type the secret everytime...)
+# 
+docker run \
+-p 8888:8888 \
+-e JUPYTER_ENABLE_LAB=yes \
+-e USE_SSL=yes \
+-e GEN_CERT=yes \
+-v "$HOME/src:/home/jovyan/src" \
+-v "$PWD/jupyter_work:/home/jovyan/work" \
+-v "$PWD/jupyter_local:/home/jovyan/.local" \
+aaronaddleman/jupyterlabs:latest
 ```
 
 You should get an output similar to this with instructions on visiting a url:
