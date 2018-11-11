@@ -16,7 +16,10 @@ USER jovyan
 RUN pip install boto3 hvac iplantuml
 RUN pip install bash_kernel
 RUN pip install python-lambda-local
+RUN pip install 'holoviews[all]'
 RUN python -m bash_kernel.install
 RUN conda install -c conda-forge ipywidgets beakerx
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
 RUN jupyter labextension install beakerx-jupyterlab
+RUN jupyter labextension install @pyviz/jupyterlab_pyviz
+
