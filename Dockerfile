@@ -10,6 +10,8 @@ RUN gem install iruby
 RUN iruby register --force
 RUN apt install -y plantuml
 RUN apt install -y python3-pip git libtinfo-dev libzmq3-dev libcairo2-dev libpango1.0-dev libmagic-dev libblas-dev liblapack-dev
+RUN chown jovyan:users /home/jovyan/.ipython
+RUN chmod 740 /home/jovyan/.ipython
 USER jovyan
 RUN pip install boto3 hvac iplantuml
 RUN pip install bash_kernel
