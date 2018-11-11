@@ -20,3 +20,4 @@ RUN python -m bash_kernel.install
 RUN conda install -c conda-forge ipywidgets beakerx
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
 RUN jupyter labextension install beakerx-jupyterlab
+RUN jupyter labextension install jupyterlab_bokeh
