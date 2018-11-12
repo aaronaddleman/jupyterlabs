@@ -72,8 +72,6 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
   jupyter labextension install @yunabe/lgo_extension && jupyter lab clean && \
   apt-get remove -y nodejs --purge && rm -rf /var/lib/apt/lists/*
 
-RUN webpack --config webpack.prod.config.js
-
 RUN chown -R jovyan:users $LGOPATH
 ### golang
 
