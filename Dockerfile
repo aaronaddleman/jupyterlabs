@@ -1,18 +1,13 @@
-FROM jupyter/datascience-notebook
+FROM jupyter/datascience-notebook:latest
 MAINTAINER apr
 USER root
 
-RUN apt-get update
-RUN apt-get install -y libtool-bin libffi-dev ruby ruby-dev make
-RUN apt-get install -y ruby
-RUN apt-get install -y git autoconf pkg-config
-RUN gem install ffi-rzmq
-RUN gem install iruby
+RUN apt-get update && \
+    apt-get install -y libtool-bin libffi-dev ruby ruby-dev make git autoconf pkg-config plantuml python3-pip git libtinfo-dev libzmq3-dev libcairo2-dev libpango1.0-dev libmagic-dev libblas-dev liblapack-dev nodejs wget gnupg
+RUN gem install ffi-rzmq iruby
 RUN iruby register --force
-RUN apt install -y plantuml
-RUN apt install -y python3-pip git libtinfo-dev libzmq3-dev libcairo2-dev libpango1.0-dev libmagic-dev libblas-dev liblapack-dev
-RUN chown jovyan:users /home/jovyan/.ipython
-RUN chmod 740 /home/jovyan/.ipython
+RUN chown jovyan:users /home/jovyan/.ipython && chmod 740 /home/jovyan/.ipython
+
 ### golang
 RUN apt-get update && apt-get install -y --no-install-recommends \
         g++ \
@@ -65,21 +60,11 @@ RUN chown -R jovyan:users $GOPATH
 
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 
-RUN apt-get update && apt-get install -my wget gnupg
-
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
-  apt-get install -y nodejs && \
-  jupyter labextension install @yunabe/lgo_extension && jupyter lab clean && \
-  apt-get remove -y nodejs --purge && rm -rf /var/lib/apt/lists/*
-
-RUN webpack --config webpack.prod.config.js
-
-RUN chown -R jovyan:users $LGOPATH
 ### golang
 
 RUN pip3 install --upgrade pip && hash -r pip
 
-RUN chown -R jovyan:users /home/jovyan
+RUN chown -R jovyan:users /home/jovyan /lgo
 USER jovyan
 
 RUN go get github.com/yunabe/lgo/cmd/lgo && go get -d github.com/yunabe/lgo/cmd/lgo-internal
@@ -88,7 +73,6 @@ RUN go get -u gonum.org/v1/gonum/...
 RUN go get -u gonum.org/v1/plot/... 
 RUN go get -u github.com/wcharczuk/go-chart
 
-
 RUN lgo install 
 RUN lgo installpkg github.com/nfnt/resize
 RUN lgo installpkg gonum.org/v1/gonum/...
@@ -96,13 +80,10 @@ RUN lgo installpkg gonum.org/v1/plot/...
 RUN lgo installpkg github.com/wcharczuk/go-chart
 RUN python $GOPATH/src/github.com/yunabe/lgo/bin/install_kernel
 
-
-RUN pip install boto3 hvac iplantuml
-RUN pip install bash_kernel
-RUN pip install python-lambda-local
+RUN pip install boto3 hvac iplantuml bash_kernel python-lambda-local
 RUN python -m bash_kernel.install
 RUN conda install -c conda-forge ipywidgets beakerx
-RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
 RUN jupyter labextension install beakerx-jupyterlab
 RUN python3 $GOPATH/src/github.com/yunabe/lgo/bin/install_kernel
-
+RUN node /opt/conda/lib/python3.6/site-packages/jupyterlab/staging/yarn.js install
+RUN jupyter labextension install @yunabe/lgo_extension 
