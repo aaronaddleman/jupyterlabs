@@ -87,4 +87,4 @@ RUN jupyter labextension install beakerx-jupyterlab
 RUN jupyter labextension install jupyterlab_bokeh
 RUN python3 $GOPATH/src/github.com/yunabe/lgo/bin/install_kernel
 RUN node /opt/conda/lib/python3.6/site-packages/jupyterlab/staging/yarn.js install
-RUN jupyter labextension install @yunabe/lgo_extension
+RUN jupyter labextension install @yunabe/lgo_extension 
