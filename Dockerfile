@@ -3,7 +3,7 @@ MAINTAINER apr
 USER root
 
 RUN apt-get update && \
-    apt-get install -y libtool-bin libffi-dev ruby ruby-dev make git autoconf pkg-config plantuml python3-pip git libtinfo-dev libzmq3-dev libcairo2-dev libpango1.0-dev libmagic-dev libblas-dev liblapack-dev nodejs wget gnupg
+    apt-get install -y libtool-bin libffi-dev ruby ruby-dev make git autoconf pkg-config plantuml python3-pip git libtinfo-dev libzmq3-dev libcairo2-dev libpango1.0-dev libmagic-dev libblas-dev liblapack-dev nodejs wget gnupg fonts-powerline
 RUN gem install ffi-rzmq iruby
 RUN iruby register --force
 RUN chown jovyan:users /home/jovyan/.ipython && chmod 740 /home/jovyan/.ipython
@@ -67,6 +67,7 @@ RUN pip3 install --upgrade pip && hash -r pip
 RUN chown -R jovyan:users /home/jovyan /lgo
 USER jovyan
 
+COPY apps/spacemacs /home/jovyan/.emacs.d
 RUN go get github.com/yunabe/lgo/cmd/lgo && go get -d github.com/yunabe/lgo/cmd/lgo-internal
 RUN go get -u github.com/nfnt/resize 
 RUN go get -u gonum.org/v1/gonum/... 
