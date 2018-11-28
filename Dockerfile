@@ -68,6 +68,7 @@ RUN chown -R jovyan:users /home/jovyan /lgo
 USER jovyan
 
 COPY apps/spacemacs /home/jovyan/.emacs.d
+RUN chown -R jovyan:users /home/jovyan/.emacs.d
 RUN go get github.com/yunabe/lgo/cmd/lgo && go get -d github.com/yunabe/lgo/cmd/lgo-internal
 RUN go get -u github.com/nfnt/resize 
 RUN go get -u gonum.org/v1/gonum/... 
