@@ -3,10 +3,24 @@ MAINTAINER apr
 USER root
 
 RUN apt-get update && \
-    apt-get install -y libtool-bin libffi-dev ruby ruby-dev make git autoconf pkg-config plantuml python3-pip git libtinfo-dev libzmq3-dev libcairo2-dev libpango1.0-dev libmagic-dev libblas-dev liblapack-dev nodejs wget gnupg fonts-powerline
-RUN gem install ffi-rzmq iruby
+    apt-get install -y libtool-bin libffi-dev ruby ruby-dev make git autoconf pkg-config plantuml python3-pip git libtinfo-dev libzmq3-dev libcairo2-dev libpango1.0-dev libmagic-dev libblas-dev liblapack-dev nodejs wget gnupg fonts-powerline zsh vim dnsutils less jq httpie ssh man gnupg2 iputils-ping libczmq-dev 
+# install gems for iruby
+RUN gem install cztop ffi-rzmq iruby pry pry-doc awesome_print gnuplot rubyvis nyaplot
 RUN iruby register --force
 RUN chown jovyan:users /home/jovyan/.ipython && chmod 740 /home/jovyan/.ipython
+
+# install tools
+ADD https://releases.hashicorp.com/vault/1.0.1/vault_1.0.1_linux_amd64.zip  /usr/local/bin/vault.zip
+RUN unzip /usr/local/bin/vault.zip -d /usr/local/bin
+
+ADD https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_linux_amd64.zip /usr/local/bin/terraform.zip
+RUN unzip /usr/local/bin/terraform.zip -d /usr/local/bin
+
+ADD https://releases.hashicorp.com/packer/1.3.4/packer_1.3.4_linux_amd64.zip /usr/local/bin/packer.zip
+RUN unzip /usr/local/bin/packer.zip -d /usr/local/bin
+
+ADD https://packages.chef.io/files/stable/chefdk/3.2.30/ubuntu/18.04/chefdk_3.2.30-1_amd64.deb /tmp/chef.deb
+RUN dpkg -i /tmp/chef.deb
 
 ### golang
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -86,7 +100,16 @@ RUN python $GOPATH/src/github.com/yunabe/lgo/bin/install_kernel
 RUN pip install boto3 hvac iplantuml bash_kernel python-lambda-local
 RUN python -m bash_kernel.install
 RUN conda install -c conda-forge ipywidgets beakerx
+RUN conda install -c pyviz holoviews bokeh
 RUN jupyter labextension install beakerx-jupyterlab
+RUN jupyter labextension install @pyviz/jupyterlab_pyviz
 RUN python3 $GOPATH/src/github.com/yunabe/lgo/bin/install_kernel
 RUN node /opt/conda/lib/python3.6/site-packages/jupyterlab/staging/yarn.js install
 RUN jupyter labextension install @yunabe/lgo_extension
+RUN jupyter labextension install @pyviz/jupyterlab_pyviz
+ADD .zshrc $HOME/.zshrc
+
+# install aws
+RUN pip install awscli --upgrade --user
+# install rise plugin for slides
+RUN conda install rise --no-deps --yes
