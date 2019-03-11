@@ -108,6 +108,7 @@ RUN node /opt/conda/lib/python3.6/site-packages/jupyterlab/staging/yarn.js insta
 RUN jupyter labextension install @yunabe/lgo_extension
 RUN jupyter labextension install @pyviz/jupyterlab_pyviz
 ADD .zshrc $HOME/.zshrc
+ADD .spacemacs-good $HOME/.spacemacs
 
 # install aws
 RUN pip install awscli --upgrade --user

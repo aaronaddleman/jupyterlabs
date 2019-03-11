@@ -101,8 +101,13 @@ git config --global credential.helper cache
 export EDITOR=vi
 
 # set permissions for .emacs.d and .spacemacs
-sudo chown -R "$USER":users $HOME/.emacs.d
-sudo chown -R "$USER":users $HOME/.spacemacs
+if [ -d $HOME/.emacs.d ]; then
+  sudo chown -R "$USER":users $HOME/.emacs.d
+fi
+
+if [ -f $HOME/.spacemacs ]; then
+  sudo chown -R "$USER":users $HOME/.spacemacs
+fi
 
 # set things for vault
 export VAULT_LOGIN_METHOD=ldap
@@ -123,3 +128,7 @@ if [ -f /data/resources/git/commit-message.txt ]; then
   git config --global commit.template /data/resources/git/commit-message.txt
 fi
 
+# install spacemacs if missing
+if [ ! -d ~/.emacs.d ]; then
+    git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+fi

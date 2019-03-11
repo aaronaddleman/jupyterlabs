@@ -35,16 +35,22 @@ docker run \
 -v "$HOME/src:/home/jovyan/src" \
 aaronaddleman/jupyterlabs:latest
 #
-# or if you want to mount everything (and you might...not want to type the secret everytime...)
-# 
+#
+# or set your home dir to something you like
+#
+NB_USER=$1
+IMAGE=$2
+PORT=${3:=8888}
+
 docker run \
--p 8888:8888 \
+--user root \
+-p $PORT:8888 \
+-e NB_USER=$NB_USER \
+-e SHELL=/usr/bin/zsh \
 -e JUPYTER_ENABLE_LAB=yes \
 -e USE_SSL=yes \
 -e GEN_CERT=yes \
--v "$HOME/src:/home/jovyan/src" \
--v "$PWD/jupyter_work:/home/jovyan/work" \
--v "$PWD/jupyter_local:/home/jovyan/.local" \
+-e GRANT_SUDO=yes
 aaronaddleman/jupyterlabs:latest
 ```
 
