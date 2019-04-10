@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+export version=${rvm_ruby_version}
+if
+  [[ -d "$HOME/.local/share/jupyter/kernels/ruby" ]]; then
+  cp -R $HOME/.local/share/jupyter/kernels/ruby $HOME/.local/share/jupyter/kernels/ruby-${version}
+  cat <<EOF > $HOME/.local/share/jupyter/kernels/ruby-${version}/kernel.json
+{"argv":["$HOME/.rvm/wrappers/ruby-${version}/iruby","kernel","{connection_file}"],"display_name":"Ruby ${version}","language":"ruby"}
+EOF
+
+fi

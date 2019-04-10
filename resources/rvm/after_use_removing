@@ -1,0 +1,8 @@
+export version=${rvm_ruby_version}
+
+if [[ $rvm_action = "remove" ]]; then
+  if [ -d "$HOME/.local/share/jupyter/kernels/ruby-${version}" ]; then
+    echo "removing ${version} jupyter kernel"
+    rm -Rf $HOME/.local/share/jupyter/kernels/ruby-${version}
+  fi
+fi
