@@ -10,6 +10,9 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     curl \
     plantuml \
     git \
+    net-tools \
+    emacs \
+    vim \
     unzip \
     nano \
     dumb-init \
@@ -19,5 +22,9 @@ EXPOSE 8080
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_UID
 
-RUN pip install boto3 hvac iplantuml bash_kernel python-lambda-local
+RUN pip install boto3 hvac iplantuml python-lambda-local
+RUN mkdir $HOME/src
+RUN git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d && \
+    git clone https://github.com/aaronaddleman/libsh.git $HOME/src/libsh
+RUN cp $HOME/src/libsh/.libshrc $HOME/.libshrc
 RUN conda install -c conda-forge ipywidgets
